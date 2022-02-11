@@ -2,6 +2,6 @@
 package fluentpal;
 
 
-public class Langue {
+public class Invitation {
     
 }

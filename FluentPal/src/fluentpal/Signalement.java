@@ -1,7 +1,7 @@
-
+/
 package fluentpal;
 
 
-public class Langue {
+public class Signalement {
     
 }
