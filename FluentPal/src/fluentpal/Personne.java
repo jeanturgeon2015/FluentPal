@@ -1,7 +1,9 @@
 
 package fluentpal;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class Personne {
@@ -12,7 +14,9 @@ public class Personne {
     protected String adresseCourriel;
     
 //    private boolean isAdmin;   not sure if we need this
-    private List<JeuQuestionnaire> listeJQ;
+    private Set<Membre> membreDesactiver = new HashSet();
+    private List<JeuQuestionnaire> listeJqCreer;
+    
 
     public Personne(int idPersonne, String nom, String prenom, String adresseCourriel) {
         this.idPersonne = idPersonne;
@@ -62,12 +66,20 @@ public class Personne {
 //        this.isAdmin = isAdmin;
 //    }
 
-    public List<JeuQuestionnaire> getListeJQ() {
-        return listeJQ;
+    public List<JeuQuestionnaire> getListeJqCreer() {
+        return listeJqCreer;
     }
 
-    public void setListeJQ(List<JeuQuestionnaire> listeJQ) {
-        this.listeJQ = listeJQ;
+    public void setListeJqCreer(List<JeuQuestionnaire> listeJqCreer) {
+        this.listeJqCreer = listeJqCreer;
+    }
+
+    public Set<Membre> getMembreDesactiver() {
+        return membreDesactiver;
+    }
+
+    public void setMembreDesactiver(Set<Membre> membreDesactiver) {
+        this.membreDesactiver = membreDesactiver;
     }
     
     
