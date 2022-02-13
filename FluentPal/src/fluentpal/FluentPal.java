@@ -39,7 +39,7 @@ public class FluentPal {
         System.out.println("Jeu Questionnaire en francais "+jeuQuestionnaireFrancais.getListeQuestions().toString());
         
         //Questionnaire en anglais
-        JeuQuestionnaire jeuQuestionnaireAnglais = creerJeuQuestionnaire(100, new Date(), "Questionnaire Anglais", "Anglais", personneConnecter);
+        JeuQuestionnaire jeuQuestionnaireAnglais = creerJeuQuestionnaire(200, new Date(), "Questionnaire Anglais", "Anglais", personneConnecter);
         List<Question> questionsAng = new ArrayList();
         questionsAng.add(new Question(creerId(), 25, "Question 1", "True", jeuQuestionnaireAnglais));
         questionsAng.add(new Question(creerId(), 25, "Question 2", "True", jeuQuestionnaireAnglais));
@@ -56,9 +56,9 @@ public class FluentPal {
         
         //on enregistre 4 utilisateurs dans l application
         enregistrerMembre("male", new Date(), "Montreal", "anglais", "weekend", creerId(), "username1", "Abc123", "ekh", "alain", "alain@gmail.com", jeuQuestionnaireAnglais);
-        enregistrerMembre("male", new Date(), "Laval", "francais", "weekend", creerId(), "username2", "Abc123", "agh", "shayan", "shaya@gmail.com", jeuQuestionnaireFrancais);
-        enregistrerMembre("male", new Date(), "Montreal", "anglais", "weekend", creerId(), "username3", "Abc123", "erra", "george", "geo@gmail.com", jeuQuestionnaireAnglais);
-        enregistrerMembre("female", new Date(), "Montreal", "anglais", "weekend", creerId(), "username4", "Abc123", "bgrr", "aline", "2alline3@gmail.com", jeuQuestionnaireAnglais);
+        enregistrerMembre("male", new Date(), "Laval", "francais", "weekend", creerId(), "username2", "Bac123", "agh", "shayan", "shaya@gmail.com", jeuQuestionnaireFrancais);
+        enregistrerMembre("male", new Date(), "Montreal", "anglais", "weekend", creerId(), "username3", "Cac123", "erra", "george", "geo@gmail.com", jeuQuestionnaireAnglais);
+        enregistrerMembre("female", new Date(), "Montreal", "anglais", "weekend", creerId(), "username4", "aac123", "bgrr", "aline", "2alline3@gmail.com", jeuQuestionnaireAnglais);
 
         //connect le user
         seConnecter("username1", "Abc123");
@@ -76,10 +76,10 @@ public class FluentPal {
         System.out.println("Membre rechercher"+resultatMembreRechercher.toString());
         /////////////////////////////////////////////////////////////////////////////////////////////////
         
+        
         //on sauvegarde un membre de la liste rechercher pour l'invitation
         Membre membreRecoieInvitation = resultatMembreRechercher.get(0);
        
-        
         //on invite le membre qui a etait sauvegarder 
         inviterMembre(membreRecoieInvitation, (Membre)personneConnecter);
 
@@ -93,14 +93,14 @@ public class FluentPal {
         seConnecter(membreRecoieInvitation.getUsername(), membreRecoieInvitation.getPassword());
         Membre membreConnecter = (Membre) personneConnecter;
         
-        //on accpete tout les invitations du nouveau user connecter
+        //on accepte tout les invitations du nouveau user connecter qui est le receveur
         for (Invitation invitation : membreConnecter.getListeInvitations()) {
             if (invitation.getMembreRecois().getUsername().equals(membreConnecter.getUsername())) {
                 invitation.setInvitationAcceptee(true);
             }
         }
         
-        //on retourne dans le premier username1 pour verifier les invitations
+        //on retourne dans le premier username1 pour verifier si l'invitation du receveur a etait accepter
         seConnecter("username1", "Abc123");
            
         //on itere pour tous les invitations qui existe pour ce membre
@@ -112,8 +112,8 @@ public class FluentPal {
         //////////////////////////////////////////////////////////////////////////////////////////////
         
         
-        //on envoie un message au perosnne qui a accepter l'invitation
-        envoyerMessage(membreRecoieInvitation, membreConnecter, "Hello World");
+        //on envoie un message au personne qui a accepter l'invitation
+        envoyerMessage(membreRecoieInvitation, membreConnecter, "Salut je tenvoie un message");
         
         //on itere pour tous les messages qui existe dans membre qui a recu l'invitation
         for(Message message : membreRecoieInvitation.getListeMessage()){
@@ -134,10 +134,13 @@ public class FluentPal {
         
         ////////////////////////////////////////////////////////////////////////////////////////////////
         
+        Membre signaler = new Membre("male", new Date(), "Montreal", "anglais", "weekend", creerId(), "username5", "Abc123", "giig", "signalme", "monsignal@gmail.com", jeuQuestionnaireAnglais);
+        
+        
         //On fait 3 signalement sur le meme membre
-        signalerMembre("Reported", membreConnecter, nonInviter);
-        signalerMembre("Reported", membreConnecter, nonInviter);
-        signalerMembre("Reported", membreConnecter, nonInviter);
+        signalerMembre("Reported", membreConnecter, signaler);
+        signalerMembre("Reported", membreConnecter, signaler);
+        signalerMembre("Reported", membreConnecter, signaler);
        
         //preuve que membre n'a pas etait banned
         System.out.println("Les membres banni sont "+personneConnecter.getMembreDesactiver().toString());
@@ -149,7 +152,7 @@ public class FluentPal {
         //Testing Admin
         seConnecter("admin1", "password");
 
-        for (Signalement signalement : nonInviter.getListeSignaleRecu()) {
+        for (Signalement signalement : signaler.getListeSignaleRecu()) {
             consulterSignalement(signalement, true);
             System.out.println("Les signalements sur le membre ont ete approuver "+signalement.isApproved());
         }
@@ -160,18 +163,24 @@ public class FluentPal {
         
         seConnecter("username1", "Abc123");
         membreConnecter = (Membre) personneConnecter;
-        //Avant le jeu questionnaire
+        
+        //Savoir le niveau du membre avant qu'il fasse le jeu questionnaire
         System.out.println("Le niveau du membre connecter avant le jeu questionnaire est "+membreConnecter.getNiveau());
         
-        JeuQuestionnaire questionnaire = membreConnecter.getJeuQuestionnaire();  
-        List<Question> listeQuestions = questionnaire.getListeQuestions();
+        //Le membre va participer au jeu questionnaire
         
+        //On va creer un nouvel objet jeuquestionnaire dans lequel on stock le jeuquestionnaire qui est assigner au membre au moment de s'enregistrer
+        JeuQuestionnaire questionnaire = membreConnecter.getJeuQuestionnaire(); 
+        //nouvel objet de liste de questions dans lequel on va stocker les reponses du membre pour le comparer avec celle de l'objet questionnaire
+        List<Question> listeQuestions = questionnaire.getListeQuestions();
 
+        //repondreQuestion va aller chercher le nombre de point pour une bonne reponse
         listeQuestions.get(0).setNbPoints(repondreQuestion(listeQuestions.get(0), "false"));
         listeQuestions.get(1).setNbPoints(repondreQuestion(listeQuestions.get(1), "true"));
         listeQuestions.get(2).setNbPoints(repondreQuestion(listeQuestions.get(2), "true"));
         listeQuestions.get(3).setNbPoints(repondreQuestion(listeQuestions.get(3), "true"));
         
+        //envoyer les reponses pour calculer le reseultat et avoir leur niveau
         calculerResultat(membreConnecter, questionnaire);
         
         //Apres le jeu questionnaire
@@ -303,10 +312,10 @@ public class FluentPal {
         for(Question question : jeuQuestionnaire.getListeQuestions()){
             cpt += question.getNbPoints();
         }
-        if(cpt < 40){
+        if(cpt <= 40){
             membre.setNiveau("Debutant");
         }
-        else if(cpt >41 && cpt<80){
+        else if(cpt >=41 && cpt<=80){
             membre.setNiveau("Intermediaire");
         }
         else{
