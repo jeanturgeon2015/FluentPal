@@ -11,22 +11,31 @@ public class Membre extends Personne {
     private String genre;
     private Date dateNaissanceMembre;
     private String ville;
-    private Langue langueChoisie;
+    private String langueChoisie;
     private String disponibilite;
+    private String niveau;
     
-    private Set<Invitation> listeMembreRecois = new HashSet();
-    private Set<Invitation> listeMembreEnvoie = new HashSet();
+    private Personne admin;
     
-    private Set<Signalement> listeMembreSignaler = new HashSet();
-    private Set<Signalement> listeMembreEtreSignaler = new HashSet();
+    private Set<Invitation> listeInvitations = new HashSet();
+    
+    private Set<Signalement> listeSignaleEnvoyer = new HashSet();
+    private Set<Signalement> listeSignaleRecu = new HashSet();
+    
+    private Set<Message> listeMessage = new HashSet();
+    
+    private JeuQuestionnaire jeuQuestionnaire;
 
-    public Membre(String genre, Date dateNaissanceMembre, String ville, Langue langueChoisie, String disponibilite, int idPersonne, String nom, String prenom, String adresseCourriel) {
-        super(idPersonne, nom, prenom, adresseCourriel);
+    public Membre(String genre, Date dateNaissanceMembre, String ville, String langueChoisie, String disponibilite, int idPersonne, String username, String password, String nom, String prenom, String adresseCourriel, JeuQuestionnaire jeuQuestionnaire) {
+        super(idPersonne, username, password, nom, prenom, adresseCourriel);
         this.genre = genre;
         this.dateNaissanceMembre = dateNaissanceMembre;
         this.ville = ville;
         this.langueChoisie = langueChoisie;
         this.disponibilite = disponibilite;
+        this.jeuQuestionnaire = jeuQuestionnaire;
+        
+        this.jeuQuestionnaire.getMembreJQ().add(this);
     }
 
     public String getDisponibilite() {
@@ -61,45 +70,78 @@ public class Membre extends Personne {
         this.ville = ville;
     }
 
-    public Langue getLangueChoisie() {
+    public Set<Invitation> getListeInvitations() {
+        return listeInvitations;
+    }
+
+    public void setListeInvitations(Set<Invitation> listeInvitations) {
+        this.listeInvitations = listeInvitations;
+    }
+
+    
+    public Personne getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Personne admin) {
+        this.admin = admin;
+    }
+
+    public Set<Message> getListeMessage() {
+        return listeMessage;
+    }
+
+    public void setListeMessage(Set<Message> listeMessage) {
+        this.listeMessage = listeMessage;
+    }
+
+    public String getLangueChoisie() {
         return langueChoisie;
     }
 
-    public void setLangueChoisie(Langue langueChoisie) {
+    public void setLangueChoisie(String langueChoisie) {
         this.langueChoisie = langueChoisie;
     }
 
-    public Set<Invitation> getListeMembreRecois() {
-        return listeMembreRecois;
+    public Set<Signalement> getListeSignaleEnvoyer() {
+        return listeSignaleEnvoyer;
     }
 
-    public void setListeMembreRecois(Set<Invitation> listeMembreRecois) {
-        this.listeMembreRecois = listeMembreRecois;
+    public void setListeSignaleEnvoyer(Set<Signalement> listeSignaleEnvoyer) {
+        this.listeSignaleEnvoyer = listeSignaleEnvoyer;
     }
 
-    public Set<Invitation> getListeMembreEnvoie() {
-        return listeMembreEnvoie;
+    public Set<Signalement> getListeSignaleRecu() {
+        return listeSignaleRecu;
     }
 
-    public void setListeMembreEnvoie(Set<Invitation> listeMembreEnvoie) {
-        this.listeMembreEnvoie = listeMembreEnvoie;
+    public void setListeSignaleRecu(Set<Signalement> listeSignaleRecu) {
+        this.listeSignaleRecu = listeSignaleRecu;
     }
 
-    public Set<Signalement> getListeMembreSignaler() {
-        return listeMembreSignaler;
+    public JeuQuestionnaire getJeuQuestionnaire() {
+        return jeuQuestionnaire;
     }
 
-    public void setListeMembreSignaler(Set<Signalement> listeMembreSignaler) {
-        this.listeMembreSignaler = listeMembreSignaler;
+    public void setJeuQuestionnaire(JeuQuestionnaire jeuQuestionnaire) {
+        this.jeuQuestionnaire = jeuQuestionnaire;
     }
 
-    public Set<Signalement> getListeMembreEtreSignaler() {
-        return listeMembreEtreSignaler;
+    public String getNiveau() {
+        return niveau;
     }
 
-    public void setListeMembreEtreSignaler(Set<Signalement> listeMembreEtreSignaler) {
-        this.listeMembreEtreSignaler = listeMembreEtreSignaler;
+    public void setNiveau(String niveau) {
+        this.niveau = niveau;
     }
+
+    @Override
+    public String toString() {
+        return "Membre{"+" nom= "+ nom + " prenom= " + prenom + " username= " + username +" adresseCourriel= " + adresseCourriel + "genre=" + genre + ", dateNaissanceMembre=" + dateNaissanceMembre + ", ville=" + ville + ", langueChoisie=" + langueChoisie + ", disponibilite=" + disponibilite + ", niveau=" + niveau + '}';
+    }
+
     
-    
+
+
+   
 }

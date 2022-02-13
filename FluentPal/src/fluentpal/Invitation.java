@@ -59,6 +59,11 @@ public class Invitation {
     public void setMembreRecois(Membre membreRecois) {
         this.membreRecois = membreRecois;
     }
+
+    @Override
+    public String toString() {
+        return "Invitation{" + "idInvitation=" + idInvitation + ", dateInvitation=" + dateInvitation + ", invitationAcceptee=" + invitationAcceptee + ", membreRecois=" + membreRecois + ", membreEnvoie=" + membreEnvoie + '}';
+    }
     
     
 }

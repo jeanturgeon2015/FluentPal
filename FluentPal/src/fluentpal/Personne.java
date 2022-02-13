@@ -9,6 +9,8 @@ import java.util.Set;
 public class Personne {
     
     protected int idPersonne;
+    protected String username;
+    protected String password;
     protected String nom;
     protected String prenom;
     protected String adresseCourriel;
@@ -16,10 +18,11 @@ public class Personne {
 //    private boolean isAdmin;   not sure if we need this
     private Set<Membre> membreDesactiver = new HashSet();
     private List<JeuQuestionnaire> listeJqCreer;
-    
 
-    public Personne(int idPersonne, String nom, String prenom, String adresseCourriel) {
+    public Personne(int idPersonne, String username, String password, String nom, String prenom, String adresseCourriel) {
         this.idPersonne = idPersonne;
+        this.username = username;
+        this.password = password;
         this.nom = nom;
         this.prenom = prenom;
         this.adresseCourriel = adresseCourriel;
@@ -57,15 +60,6 @@ public class Personne {
         this.prenom = prenom;
     }
 
-//    Not sure if we need this.
-//    public boolean isIsAdmin() {
-//        return isAdmin;
-//    }
-//
-//    public void setIsAdmin(boolean isAdmin) {
-//        this.isAdmin = isAdmin;
-//    }
-
     public List<JeuQuestionnaire> getListeJqCreer() {
         return listeJqCreer;
     }
@@ -80,6 +74,27 @@ public class Personne {
 
     public void setMembreDesactiver(Set<Membre> membreDesactiver) {
         this.membreDesactiver = membreDesactiver;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String toString() {
+        return "Personne{" + "idPersonne=" + idPersonne + ", username=" + username + ", password=" + password + ", nom=" + nom + ", prenom=" + prenom + ", adresseCourriel=" + adresseCourriel + '}';
     }
     
     

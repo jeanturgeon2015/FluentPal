@@ -11,13 +11,7 @@ public class Message {
 
     private Membre membreRecevoir;
     private Membre membreEnvoyer;
-    
-    public Message(int idMessage, Date dateMessage, String contenuMessage) {
-        this.idMessage = idMessage;
-        this.dateMessage = dateMessage;
-        this.contenuMessage = contenuMessage;
-    }
-
+   
     public Message(int idMessage, Date dateMessage, String contenuMessage, Membre membreRecevoir, Membre membreEnvoyer) {
         this.idMessage = idMessage;
         this.dateMessage = dateMessage;
@@ -64,6 +58,11 @@ public class Message {
 
     public void setMembreRecevoir(Membre membreRecevoir) {
         this.membreRecevoir = membreRecevoir;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" + "idMessage=" + idMessage + ", dateMessage=" + dateMessage + ", contenuMessage=" + contenuMessage + ", membreRecevoir=" + membreRecevoir + ", membreEnvoyer=" + membreEnvoyer + '}';
     }
     
     
