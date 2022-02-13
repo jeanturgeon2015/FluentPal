@@ -71,7 +71,6 @@ public class FluentPal {
 
         
         //recherche les membres avec les criteres male anglais weekend de la liste, quand tu fais la recherche de membre
-        //ils ont pas le meme username ils ont pas le meme resultat, hashset na pas de getter donc pr faciliter on a coverti a liste
         List<Membre> resultatMembreRechercher = rechercherMembre("male", "anglais", "weekend");
         
         System.out.println("Membre rechercher"+resultatMembreRechercher.toString());
@@ -166,6 +165,8 @@ public class FluentPal {
         
         JeuQuestionnaire questionnaire = membreConnecter.getJeuQuestionnaire();  
         List<Question> listeQuestions = questionnaire.getListeQuestions();
+        
+
         listeQuestions.get(0).setNbPoints(repondreQuestion(listeQuestions.get(0), "false"));
         listeQuestions.get(1).setNbPoints(repondreQuestion(listeQuestions.get(1), "true"));
         listeQuestions.get(2).setNbPoints(repondreQuestion(listeQuestions.get(2), "true"));
