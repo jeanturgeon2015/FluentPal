@@ -11,23 +11,23 @@ public class JeuQuestionnaire {
     private int idJeuQuestionnaire;
     private Date dateCreationJQ;
     private String titre;
-    private Langue langueJQ;
+    private String langueJQ;
     
     Personne admin;
     private Set<Question> listeQuestions = new HashSet();
 
-    public JeuQuestionnaire(int idJeuQuestionnaire, Date dateCreationJQ, String titre, Langue langueJQ) {
+    public JeuQuestionnaire(int idJeuQuestionnaire, Date dateCreationJQ, String titre, String langueJQ) {
         this.idJeuQuestionnaire = idJeuQuestionnaire;
         this.dateCreationJQ = dateCreationJQ;
         this.titre = titre;
         this.langueJQ = langueJQ;
     }
 
-    public Langue getLangueJQ() {
+    public String getLangueJQ() {
         return langueJQ;
     }
 
-    public void setLangueJQ(Langue langueJQ) {
+    public void setLangueJQ(String langueJQ) {
         this.langueJQ = langueJQ;
     }
 
