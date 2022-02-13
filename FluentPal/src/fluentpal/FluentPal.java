@@ -9,99 +9,173 @@ import java.util.Set;
 public class FluentPal {
 
     static Set<Personne> personneEnregistrer = new HashSet(); // keep track tout les membres enregistrer
-    static Personne personneConnecter; //keep track dune membre connecter
-    //////////////////////////////////////////////////////////////
+    static Personne personneConnecter; //keep track d'un membre connecter
+    static int id;
 
     public static void main(String[] args) {
 
-        enregistrerAdmin(999, "admin1", "password", "turg", "Jean", "jeanturg@gmail.com");
+        System.out.println("Admin Enregistrer = "+personneEnregistrer);
+        System.out.println("Admin Connecter = "+personneConnecter);
+        
+        enregistrerAdmin(creerId(), "admin1", "password", "turg", "Jean", "jeanturg@gmail.com");
         seConnecter("admin1", "password");
+        
+        System.out.println("Admin Enregistrer = "+personneEnregistrer);
+        System.out.println("Admin Connecter = "+personneConnecter);
+        
+        ///////////////////////////////////////////////////////////////////////////////////
+        
         
         //Questionnaire en francais
         JeuQuestionnaire jeuQuestionnaireFrancais = creerJeuQuestionnaire(100, new Date(), "Questionnaire Francais", "Francais", personneConnecter);
         List<Question> questionsFr = new ArrayList();
-        questionsFr.add(new Question(10, 25, "Question 1", "Vrai", jeuQuestionnaireFrancais));
-        questionsFr.add(new Question(11, 25, "Question 2", "Vrai", jeuQuestionnaireFrancais));
-        questionsFr.add(new Question(12, 25, "Question 3", "Vrai", jeuQuestionnaireFrancais));
-        questionsFr.add(new Question(13, 25, "Question 4", "Vrai", jeuQuestionnaireFrancais));
+        questionsFr.add(new Question(creerId(), 25, "Question 1", "Vrai", jeuQuestionnaireFrancais));
+        questionsFr.add(new Question(creerId(), 25, "Question 2", "Vrai", jeuQuestionnaireFrancais));
+        questionsFr.add(new Question(creerId(), 25, "Question 3", "Vrai", jeuQuestionnaireFrancais));
+        questionsFr.add(new Question(creerId(), 25, "Question 4", "Vrai", jeuQuestionnaireFrancais));
 
         jeuQuestionnaireFrancais.setListeQuestions(questionsFr);
+        
+        System.out.println("Jeu Questionnaire en francais "+jeuQuestionnaireFrancais.getListeQuestions().toString());
         
         //Questionnaire en anglais
         JeuQuestionnaire jeuQuestionnaireAnglais = creerJeuQuestionnaire(100, new Date(), "Questionnaire Anglais", "Anglais", personneConnecter);
         List<Question> questionsAng = new ArrayList();
-        questionsAng.add(new Question(10, 25, "Question 1", "True", jeuQuestionnaireAnglais));
-        questionsAng.add(new Question(11, 25, "Question 2", "True", jeuQuestionnaireAnglais));
-        questionsAng.add(new Question(12, 25, "Question 3", "True", jeuQuestionnaireAnglais));
-        questionsAng.add(new Question(13, 25, "Question 4", "True", jeuQuestionnaireAnglais));
+        questionsAng.add(new Question(creerId(), 25, "Question 1", "True", jeuQuestionnaireAnglais));
+        questionsAng.add(new Question(creerId(), 25, "Question 2", "True", jeuQuestionnaireAnglais));
+        questionsAng.add(new Question(creerId(), 25, "Question 3", "True", jeuQuestionnaireAnglais));
+        questionsAng.add(new Question(creerId(), 25, "Question 4", "True", jeuQuestionnaireAnglais));
 
-        jeuQuestionnaireFrancais.setListeQuestions(questionsAng);
-
+        jeuQuestionnaireAnglais.setListeQuestions(questionsAng);
+        
+        System.out.println("Jeu Questionnaire en anglais "+jeuQuestionnaireAnglais.getListeQuestions().toString());
+        
+        
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
         //on enregistre 4 utilisateurs dans l application
-        enregistrerMembre("male", new Date(), "Montreal", "anglais", "weekend", 1, "username1", "Abc123", "ekh", "alain", "alain@gmail.com", jeuQuestionnaireAnglais);
-        enregistrerMembre("female", new Date(), "Montreal", "francais", "weekend", 1, "username2", "Abc123", "agh", "aline", "aline@gmail.com", jeuQuestionnaireFrancais);
-        enregistrerMembre("male", new Date(), "Montreal", "anglais", "weekend", 1, "username3", "Abc123", "erra", "bbobe", "ffan@gmail.com", jeuQuestionnaireAnglais);
-        enregistrerMembre("male", new Date(), "Montreal", "anglais", "weekend", 1, "username4", "Abc123", "etree", "caaa", "213@gmail.com", jeuQuestionnaireAnglais);
+        enregistrerMembre("male", new Date(), "Montreal", "anglais", "weekend", creerId(), "username1", "Abc123", "ekh", "alain", "alain@gmail.com", jeuQuestionnaireAnglais);
+        enregistrerMembre("male", new Date(), "Laval", "francais", "weekend", creerId(), "username2", "Abc123", "agh", "shayan", "shaya@gmail.com", jeuQuestionnaireFrancais);
+        enregistrerMembre("male", new Date(), "Montreal", "anglais", "weekend", creerId(), "username3", "Abc123", "erra", "george", "geo@gmail.com", jeuQuestionnaireAnglais);
+        enregistrerMembre("female", new Date(), "Montreal", "anglais", "weekend", creerId(), "username4", "Abc123", "bgrr", "aline", "2alline3@gmail.com", jeuQuestionnaireAnglais);
 
         //connect le user
         seConnecter("username1", "Abc123");
+        
+        System.out.println("Personne Enregistrer = "+personneEnregistrer);
+        System.out.println("Personne Connecter = "+personneConnecter);
+        
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////////
 
-        Membre membreConnecter = (Membre) personneConnecter;
-
-        //recherche les membres avec les criteres male anglais weekend de la liste 
+        
+        //recherche les membres avec les criteres male anglais weekend de la liste, quand tu fais la recherche de membre
+        //ils ont pas le meme username ils ont pas le meme resultat, hashset na pas de getter donc pr faciliter on a coverti a liste
         List<Membre> resultatMembreRechercher = rechercherMembre("male", "anglais", "weekend");
-
+        
+        System.out.println("Membre rechercher"+resultatMembreRechercher.toString());
+        /////////////////////////////////////////////////////////////////////////////////////////////////
+        
         //on sauvegarde un membre de la liste rechercher pour l'invitation
         Membre membreRecoieInvitation = resultatMembreRechercher.get(0);
+       
+        
         //on invite le membre qui a etait sauvegarder 
-        inviterMembre(membreRecoieInvitation, (Membre)membreConnecter);
+        inviterMembre(membreRecoieInvitation, (Membre)personneConnecter);
 
+        System.out.println("Membre invitee"+membreRecoieInvitation.getListeInvitations());
+        
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////////
+
+        
         //on deconnecte du username1 pour reconnecter avec le prochain user qui recois l'invitation
         seConnecter(membreRecoieInvitation.getUsername(), membreRecoieInvitation.getPassword());
-
+        Membre membreConnecter = (Membre) personneConnecter;
+        
         //on accpete tout les invitations du nouveau user connecter
         for (Invitation invitation : membreConnecter.getListeInvitations()) {
             if (invitation.getMembreRecois().getUsername().equals(membreConnecter.getUsername())) {
                 invitation.setInvitationAcceptee(true);
             }
         }
-
+        
         //on retourne dans le premier username1 pour verifier les invitations
         seConnecter("username1", "Abc123");
-
+           
+        //on itere pour tous les invitations qui existe pour ce membre
+        for(Invitation invitation : membreRecoieInvitation.getListeInvitations()){
+            System.out.println("Membre accepte une invitation "+invitation.isInvitationAcceptee());
+        }
+        
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
         //on envoie un message au perosnne qui a accepter l'invitation
-        envoyerMessage(membreRecoieInvitation, (Membre)membreConnecter, "Hello World");
+        envoyerMessage(membreRecoieInvitation, membreConnecter, "Hello World");
+        
+        //on itere pour tous les messages qui existe dans membre qui a recu l'invitation
+        for(Message message : membreRecoieInvitation.getListeMessage()){
+            System.out.println("Le contenu du message est "+message.getContenuMessage());
+        }
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////
 
         //on sauvegarde un membre qui n'a pas recu d'invitation
-        Membre nonInviter = resultatMembreRechercher.get(2);
+        Membre nonInviter = resultatMembreRechercher.get(1);
 
         //on essaie d'envoyer un message qui n'a pas recu d'invitation
-        envoyerMessage(nonInviter, (Membre) membreConnecter, "Hello World");
+        envoyerMessage(nonInviter, membreConnecter, "Hello World");
+        
+        System.out.println("Le membre nonInviter na pas eu d'invitation "+nonInviter.getListeInvitations().size());
+        
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        //On fait 3 signalement sur le meme membre
+        signalerMembre("Reported", membreConnecter, nonInviter);
+        signalerMembre("Reported", membreConnecter, nonInviter);
+        signalerMembre("Reported", membreConnecter, nonInviter);
+       
+        //preuve que membre n'a pas etait banned
+        System.out.println("Les membres banni sont "+personneConnecter.getMembreDesactiver().toString());
+        
 
-        signalerMembre("Reported", (Membre) membreConnecter, nonInviter);
-        signalerMembre("Reported", (Membre) membreConnecter, nonInviter);
-        signalerMembre("Reported", (Membre) membreConnecter, nonInviter);
-        //preuve que username non inviter existe toujours
-        ////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
         //Testing Admin
-
         seConnecter("admin1", "password");
 
         for (Signalement signalement : nonInviter.getListeSignaleRecu()) {
             consulterSignalement(signalement, true);
+            System.out.println("Les signalements sur le membre ont ete approuver "+signalement.isApproved());
         }
-
+        
+        System.out.println("Le membre banni sont"+personneConnecter.getMembreDesactiver().toString());
+       
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+        
         seConnecter("username1", "Abc123");
         membreConnecter = (Membre) personneConnecter;
-        JeuQuestionnaire questionnaire = membreConnecter.getJeuQuestionnaire();
+        //Avant le jeu questionnaire
+        System.out.println("Le niveau du membre connecter avant le jeu questionnaire est "+membreConnecter.getNiveau());
+        
+        JeuQuestionnaire questionnaire = membreConnecter.getJeuQuestionnaire();  
         List<Question> listeQuestions = questionnaire.getListeQuestions();
         listeQuestions.get(0).setNbPoints(repondreQuestion(listeQuestions.get(0), "false"));
         listeQuestions.get(1).setNbPoints(repondreQuestion(listeQuestions.get(1), "true"));
         listeQuestions.get(2).setNbPoints(repondreQuestion(listeQuestions.get(2), "true"));
         listeQuestions.get(3).setNbPoints(repondreQuestion(listeQuestions.get(3), "true"));
         
-        questionnaire.setTotalResultat(calculerResultat(questionnaire));
+        calculerResultat(membreConnecter, questionnaire);
+        
+        //Apres le jeu questionnaire
+        System.out.println("Le niveau du membre connecter apres le jeu questionnaire est "+membreConnecter.getNiveau());
+        
         
 
     }
@@ -111,23 +185,6 @@ public class FluentPal {
         personneEnregistrer.add(personne);
     }
 
-    public static void consulterSignalement(Signalement signalement, boolean status) {
-        if (personneConnecter instanceof Membre) {
-            return;
-        }
-
-        signalement.setApproved(status);
-        Membre membre = signalement.getMembreQuiEstSignaler();
-        int cpt = 0;
-        for (Signalement signalementMembre : membre.getListeSignaleRecu()) {
-            if (signalementMembre.isApproved()) {
-                cpt++;
-            }
-        }
-        if (cpt >= 3) {
-            personneConnecter.getMembreDesactiver().add(membre);
-        }
-    }
 
     public static void enregistrerMembre(String genre, Date dateNaissanceMembre, String ville, String langueChoisie, String disponibilite, int idPersonne, String username, String password, String nom, String prenom, String adresseCourriel, JeuQuestionnaire jeuQuestionnaire) {
         Membre membre = new Membre(genre, dateNaissanceMembre, ville, langueChoisie, disponibilite, idPersonne, username, password, nom, prenom, adresseCourriel, jeuQuestionnaire);
@@ -197,7 +254,24 @@ public class FluentPal {
         }
         return false;
     }
-    ////////////////////////////////////////////////
+    
+    public static void consulterSignalement(Signalement signalement, boolean status) {
+        if (personneConnecter instanceof Membre) {
+            return;
+        }
+
+        signalement.setApproved(status);
+        Membre membre = signalement.getMembreQuiEstSignaler();
+        int cpt = 0;
+        for (Signalement signalementMembre : membre.getListeSignaleRecu()) {
+            if (signalementMembre.isApproved()) {
+                cpt++;
+            }
+        }
+        if (cpt >= 3) {
+            personneConnecter.getMembreDesactiver().add(membre);
+        }
+    }
 
     public static void signalerMembre(String contenuMessage, Membre membreQuiSignale, Membre membreQuiEstSignaler) {
         if (personneConnecter == null) {
@@ -223,12 +297,25 @@ public class FluentPal {
         return 0;
     }
 
-    public static int calculerResultat(JeuQuestionnaire jeuQuestionnaire){
+    public static int calculerResultat(Membre membre, JeuQuestionnaire jeuQuestionnaire){
         int cpt = 0;
         for(Question question : jeuQuestionnaire.getListeQuestions()){
             cpt += question.getNbPoints();
         }
+        if(cpt < 40){
+            membre.setNiveau("Debutant");
+        }
+        else if(cpt >41 && cpt<80){
+            membre.setNiveau("Intermediaire");
+        }
+        else{
+            membre.setNiveau("Avancer");
+        }
         return cpt;
+    }
+    
+    public static int creerId(){
+        return ++id;
     }
    
 }
