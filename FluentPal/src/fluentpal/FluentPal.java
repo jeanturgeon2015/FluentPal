@@ -25,9 +25,9 @@ public class FluentPal {
         
         ///////////////////////////////////////////////////////////////////////////////////
         
-        
+        //Les admins doivent creer les questions
         //Questionnaire en francais
-        JeuQuestionnaire jeuQuestionnaireFrancais = creerJeuQuestionnaire(100, new Date(), "Questionnaire Francais", "Francais", personneConnecter);
+        JeuQuestionnaire jeuQuestionnaireFrancais = creerJeuQuestionnaire(creerId(), new Date(), "Questionnaire Francais", "Francais", personneConnecter);
         List<Question> questionsFr = new ArrayList();
         questionsFr.add(new Question(creerId(), 25, "Question 1", "Vrai", jeuQuestionnaireFrancais));
         questionsFr.add(new Question(creerId(), 25, "Question 2", "Vrai", jeuQuestionnaireFrancais));
@@ -39,7 +39,7 @@ public class FluentPal {
         System.out.println("Jeu Questionnaire en francais "+jeuQuestionnaireFrancais.getListeQuestions().toString());
         
         //Questionnaire en anglais
-        JeuQuestionnaire jeuQuestionnaireAnglais = creerJeuQuestionnaire(200, new Date(), "Questionnaire Anglais", "Anglais", personneConnecter);
+        JeuQuestionnaire jeuQuestionnaireAnglais = creerJeuQuestionnaire(creerId(), new Date(), "Questionnaire Anglais", "Anglais", personneConnecter);
         List<Question> questionsAng = new ArrayList();
         questionsAng.add(new Question(creerId(), 25, "Question 1", "True", jeuQuestionnaireAnglais));
         questionsAng.add(new Question(creerId(), 25, "Question 2", "True", jeuQuestionnaireAnglais));
@@ -58,6 +58,7 @@ public class FluentPal {
         enregistrerMembre("male", new Date(), "Montreal", "anglais", "weekend", creerId(), "username1", "Abc123", "ekh", "alain", "alain@gmail.com", jeuQuestionnaireAnglais);
         enregistrerMembre("male", new Date(), "Laval", "francais", "weekend", creerId(), "username2", "Bac123", "agh", "shayan", "shaya@gmail.com", jeuQuestionnaireFrancais);
         enregistrerMembre("male", new Date(), "Montreal", "anglais", "weekend", creerId(), "username3", "Cac123", "erra", "george", "geo@gmail.com", jeuQuestionnaireAnglais);
+        enregistrerMembre("male", new Date(), "Laval", "anglais", "weekend", creerId(), "username5", "Bac123", "agh", "shayan", "shaya@gmail.com", jeuQuestionnaireFrancais);
         enregistrerMembre("female", new Date(), "Montreal", "anglais", "weekend", creerId(), "username4", "aac123", "bgrr", "aline", "2alline3@gmail.com", jeuQuestionnaireAnglais);
 
         //connect le user
@@ -78,7 +79,7 @@ public class FluentPal {
         
         
         //on sauvegarde un membre de la liste rechercher pour l'invitation
-        Membre membreRecoieInvitation = resultatMembreRechercher.get(0);
+        Membre membreRecoieInvitation = resultatMembreRechercher.get(1);
        
         //on invite le membre qui a etait sauvegarder 
         inviterMembre(membreRecoieInvitation, (Membre)personneConnecter);
@@ -111,6 +112,7 @@ public class FluentPal {
         
         //////////////////////////////////////////////////////////////////////////////////////////////
         
+        membreConnecter = (Membre) personneConnecter;
         
         //on envoie un message au personne qui a accepter l'invitation
         envoyerMessage(membreRecoieInvitation, membreConnecter, "Salut je tenvoie un message");
@@ -124,7 +126,7 @@ public class FluentPal {
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
         //on sauvegarde un membre qui n'a pas recu d'invitation
-        Membre nonInviter = resultatMembreRechercher.get(1);
+        Membre nonInviter = resultatMembreRechercher.get(0);
 
         //on essaie d'envoyer un message qui n'a pas recu d'invitation
         envoyerMessage(nonInviter, membreConnecter, "Hello World");
